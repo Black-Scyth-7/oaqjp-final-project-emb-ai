@@ -1,5 +1,4 @@
-"""
-Flask server for the Emotion Detection web application.
+"""Flask server for the Emotion Detection web application.
 
 This module deploys the emotion_detector function as a web service
 accessible at localhost:5000.
@@ -14,8 +13,9 @@ app = Flask("Emotion Detector")
 @app.route("/emotionDetector")
 def emot_detector():
     """Receive text from the user, run emotion detection, and return a
-    formatted response string. Handles blank input by returning an error
-    message when the dominant emotion is None."""
+    formatted response string. Returns an error message when the input
+    is blank and the dominant emotion is None.
+    """
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
 
@@ -26,7 +26,6 @@ def emot_detector():
     sadness = response['sadness']
     dominant_emotion = response['dominant_emotion']
 
-    # Handle the case where the input is blank/invalid
     if dominant_emotion is None:
         return "Invalid text! Please try again!."
 
@@ -40,7 +39,7 @@ def emot_detector():
 
 @app.route("/")
 def render_index_page():
-    """Render the main HTML page."""
+    """Render the main HTML page of the emotion detection application."""
     return render_template('index.html')
 
 
